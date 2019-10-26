@@ -35,29 +35,32 @@ class ComposController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        $compo = new Competition();
+        // dd(request()->all());
+        Competition::create(request(['name','maxplayers','minplayers','date',]));
 
-        $compo->name = request('title');
-        $compo->maxplayers = request('maxplayers');
-        $compo->minplayers = request('minplayers');
-        $compo->date = request('date');
+        // oude manier
+        // $compo = new Competition();
+        // $compo->name = request('title');
+        // $compo->maxplayers = request('maxplayers');
+        // $compo->minplayers = request('minplayers');
+        // $compo->date = request('date');
 
-        $compo->save();
+        // $compo->save();
 
         return redirect('/compo');
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified resource. Competition $competition
      *
      * @param  \App\Competition  $competition
      * @return \Illuminate\Http\Response
      */
-    public function show(Competition $competition)
+    public function show(Competition $compo)
     {
-        //
+        return view('compo.show', compact('compo'));
     }
 
     /**
@@ -66,9 +69,8 @@ class ComposController extends Controller
      * @param  \App\Competition  $competition
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Competition $compo)
     {
-        $compo = Competition::findOrFail($id);
         return view('compo.edit', compact('compo'));
     }
 
@@ -79,14 +81,16 @@ class ComposController extends Controller
      * @param  \App\Competition  $competition
      * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update(Competition $compo)
     {
-        $compo = Competition::findOrFail($id);
 
-        $compo->name = request('name');
-        $compo->date = request('date');
 
-        $compo->save();
+        $compo->update(request(['name','maxplayers','minplayers','date',]));
+
+        // oude manier
+        // $compo->name = request('name');
+        // $compo->date = request('date');
+        // $compo->save();
 
         return redirect('/compo');
     }
@@ -97,9 +101,9 @@ class ComposController extends Controller
      * @param  \App\Competition  $competition
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Competition $compo)
     {
-        Competition::findOrFail($id)->delete();
+        $compo->delete();
         return redirect('/compo');
 
     }

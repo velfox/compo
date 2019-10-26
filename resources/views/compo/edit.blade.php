@@ -6,7 +6,7 @@
 <form action="/compo/{{$compo->id}}" method="post">
         {{ csrf_field() }}
         {{ method_field('PATCH') }}
-        
+
         <div class="form-group">
             <label for="">Game Name</label>
             <input type="name" name="name" class="form-control" value="{{$compo->name }}" placeholder="Game name">
