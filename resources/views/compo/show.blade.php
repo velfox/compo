@@ -17,7 +17,25 @@
                             <p>min players: <span class="badge badge-light">{{ $compo->minplayers }}</span></p>
                     </div>
                   </div>
-
+            <hr class="my-4">
+                @if($compo->results->count())
+                <p> resultaten </p>
+                @foreach ($compo->results as $result)
+                <div class="row">
+                    <div class="col-sm">
+                            <p>naam <span class="badge badge-light">{{ $result->user_id }}</span></p>
+                    </div>
+                    <div class="col-sm">
+                            <p>plaats <span class="badge badge-light">{{ $result->place }}</span></p>
+                    </div>
+                    <div class="col-sm">
+                            <p>punten <span class="badge badge-light">{{ $compo->minplayers }}</span></p>
+                    </div>
+                  </div>
+                @endforeach
+            @else
+                <p> Nog geen resultaten bekend </p>
+            @endif
 
             <hr class="my-4">
             <a class="btn btn-primary btn-lg" href="#" role="button">Inschrijfen</a>
