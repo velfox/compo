@@ -12,4 +12,8 @@ class Competition extends Model
         return $this->hasMany(Results::class);
     }
 
+    public function summoner(){
+        return $this->hasMany(summoner::class);
+    }
+
 }

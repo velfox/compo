@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Competition;
 use Hamcrest\Core\CombinableMatcher;
 use Illuminate\Http\Request;
+use App\summoner;
 
 class ComposController extends Controller
 {
@@ -36,6 +37,7 @@ class ComposController extends Controller
 
     public function show(Competition $compo)
     {
+        
         return view('compo.show', compact('compo'));
     }
 
