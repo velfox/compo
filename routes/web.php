@@ -50,3 +50,7 @@ Route::post('summoner/{id}', 'SommonersComposController@store');
 //     return view('about');
 // });
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
