@@ -37,8 +37,28 @@
                 <p> Nog geen resultaten bekend </p>
             @endif
 
+
+            @php $jup = "inschrijfen"  @endphp
+            @foreach ($compo->summoner as $result)
+                @if ($result->user_id == "1")
+                    @php $jup = "uitschrijfen"  @endphp
+                    @break
+                @else
+                    @php
+                    $jup = "inschrijfen"
+                    @endphp
+                @endif
+            @endforeach
+
             <hr class="my-4">
-            <a class="btn btn-primary btn-lg" href="#" role="button">Inschrijfen</a>
+            <form action="/summoner/create" method="post">
+                {{ csrf_field() }}
+
+                {{-- {{ method_field('PATCH') }} --}}
+                <input type="hidden" name="user_id" value="1">
+                <input type="hidden" name="competition_id" value="{{$compo->id}}">
+            <button type="submit" class="btn btn-primary btn-lg" href="#" role="button">{{ $jup }}</button>
+            </form>
                 <a class="btn btn-primary btn-lg" href="/compo/{{ $compo->id }}/edit" role="button">bewerken</a>
             <a class="btn btn-primary btn-lg" href="/compo" role="button">terug</a>
         </div>
