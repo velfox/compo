@@ -23,7 +23,11 @@ Route::get('/compo', 'PagesController@compo');
 
 Route::resource('compo', 'composController');
 
-Route::post('summoner/{id}', 'SommonersComposController@store');
+Route::resource('summoner', 'SommonersComposController');
+
+// Route::post('summoner/{id}', 'SommonersComposController@store');
+Route::post('summoner/{id}', 'SommonersComposController@destroy');
+
 
 // Route::post('/compo', 'composController@store');
 // Route::get('/compo/create', 'PagesController@create');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Competition;
 use App\summoner;
 use Illuminate\Http\Request;
+use App\User;
 
 class SommonersComposController extends Controller
 {
@@ -24,7 +25,7 @@ class SommonersComposController extends Controller
      */
     public function create()
     {
-
+        
     }
 
     /**
@@ -35,13 +36,15 @@ class SommonersComposController extends Controller
      */
     public function store()
     {
-        $validated = request()->validate([
-            'user_id'=> ['required','integer'],
-            'competition_id'=> ['required','integer'],
-           ]);
-           summoner::create($validated);
-           $id = request('competition_id');
-        return redirect('/compo/'. $id);
+       $userid = auth()->id();
+       $compoid = request('competition_id');
+
+        $validated = request()->validate(['competition_id' => ['required','integer']]);
+        $data = ["competition_id" => $validated['competition_id'], "user_id" => $userid];
+
+        summoner::create($data);
+
+        return redirect('/compo/'. $compoid);
     }
 
     /**
@@ -84,8 +87,20 @@ class SommonersComposController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy()
     {
+        $userid = auth()->id();
+        $validated = request()->validate(['competition_id' => ['required','integer']]);
+        $competition_id = $validated['competition_id'];
 
+        summoner::where([
+            ['user_id', '=', $userid],
+            ['competition_id', '=', $competition_id]
+        ])->delete();
+
+        return redirect("/compo/$competition_id");
     }
 }
+
+
+

@@ -38,9 +38,12 @@
             @endif
 
 
-            @php $jup = "inschrijfen"  @endphp
+            @php $test = count($compo->summoner);  @endphp
+
+                  <h1> {{$test}} </h1>
+            @php  $jup = "inschrijfen"  @endphp
             @foreach ($compo->summoner as $result)
-                @if ($result->user_id == "1")
+                @if ($result->user_id ==  Auth::user()->id )
                     @php $jup = "uitschrijfen"  @endphp
                     @break
                 @else
@@ -51,14 +54,20 @@
             @endforeach
 
             <hr class="my-4">
-            <form action="/summoner/create" method="post">
+            @if ($jup == "inschrijfen")
+            <form action="/summoner" method="post">
                 {{ csrf_field() }}
-
-                {{-- {{ method_field('PATCH') }} --}}
-                <input type="hidden" name="user_id" value="1">
                 <input type="hidden" name="competition_id" value="{{$compo->id}}">
             <button type="submit" class="btn btn-primary btn-lg" href="#" role="button">{{ $jup }}</button>
             </form>
+            @else
+            <form action="/summoner/{{$compo->id}}" method="post">
+                {{ csrf_field() }}
+                {{ method_field('DELETE') }}
+                <input type="hidden" name="competition_id" value="{{$compo->id}}">
+                <button type="submit" class="btn btn-danger btn-lg">uitschrijfen</button>
+            </form>
+            @endif
                 <a class="btn btn-primary btn-lg" href="/compo/{{ $compo->id }}/edit" role="button">bewerken</a>
             <a class="btn btn-primary btn-lg" href="/compo" role="button">terug</a>
         </div>

@@ -9,6 +9,11 @@ use App\summoner;
 
 class ComposController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         $compo = Competition::all();
@@ -37,7 +42,6 @@ class ComposController extends Controller
 
     public function show(Competition $compo)
     {
-        
         return view('compo.show', compact('compo'));
     }
 
