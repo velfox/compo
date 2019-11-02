@@ -13,7 +13,7 @@
 @endforeach
 
 @section('content')
-    <div class="container">
+    <div class="mt-4 container">
         <div class="jumbotron">
             <h1 class="display-4">{{ $compo->name }} <span class="badge badge-secondary">{{$compo->date }}</span> </h1>
             <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
@@ -92,8 +92,7 @@
 
 
             <hr class="my-4">
-
-                <a class="btn btn-primary btn-lg" href="/compo/{{ $compo->id }}/edit" role="button">bewerken</a>
+                @can('update', $compo)<a class="btn btn-primary btn-lg" href="/compo/{{ $compo->id }}/edit" role="button">bewerken</a> @endcan
                 <a class="btn btn-primary btn-lg" href="/compo" role="button">terug</a>
         </div>
     </div>

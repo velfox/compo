@@ -36,8 +36,12 @@ class ComposController extends Controller
              'date' => ['required','date',"after_or_equal:$today"]
             ]);
 
+        $validated['owner_id'] = auth()->id();
+
         Competition::create($validated);
         return redirect('/compo');
+
+
     }
 
     public function show(Competition $compo)
@@ -47,17 +51,20 @@ class ComposController extends Controller
 
     public function edit(Competition $compo)
     {
+        $this->authorize('vieuw', $compo);
         return view('compo.edit', compact('compo'));
     }
 
     public function update(Competition $compo)
     {
+        $this->authorize('update', $compo);
         $compo->update(request(['name','maxplayers','minplayers','date',]));
         return redirect('/compo');
     }
 
     public function destroy(Competition $compo)
     {
+        $this->authorize('update', $compo);
         $compo->delete();
         return redirect('/compo');
     }

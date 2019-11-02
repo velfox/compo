@@ -15,6 +15,7 @@ class Competitions extends Migration
     {
         Schema::create('Competitions', function (Blueprint $table) {
         $table->bigIncrements('id');
+        $table->unsignedInteger('owner_id');
         $table->string('name')->nullable();
         $table->string('gamemode');
         $table->integer('maxplayers');

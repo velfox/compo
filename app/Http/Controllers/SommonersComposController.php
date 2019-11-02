@@ -25,7 +25,7 @@ class SommonersComposController extends Controller
      */
     public function create()
     {
-        
+
     }
 
     /**
@@ -36,13 +36,12 @@ class SommonersComposController extends Controller
      */
     public function store()
     {
-       $userid = auth()->id();
-       $compoid = request('competition_id');
+        $compoid = request('competition_id');
 
         $validated = request()->validate(['competition_id' => ['required','integer']]);
-        $data = ["competition_id" => $validated['competition_id'], "user_id" => $userid];
+        $validated['user_id'] = auth()->id();
 
-        summoner::create($data);
+        summoner::create($validated);
 
         return redirect('/compo/'. $compoid);
     }
