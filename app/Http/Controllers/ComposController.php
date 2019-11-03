@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Competition;
 use App\Mail\CompoCreated;
+use App\Results;
 use Hamcrest\Core\CombinableMatcher;
 use Illuminate\Http\Request;
 use App\summoner;
@@ -22,16 +23,15 @@ class ComposController extends Controller
         return View('compo.compo', compact('compo'));
     }
 
-    public function own(){
-        $compo = Competition::where([
-            ['id', '=', auth()->id()],
-        ])->get();
-        return View('compo.compo', compact('compo'));
-    }
 
     public function create()
     {
-        return View('compo.create');
+        if ( $this->ChekMakeComopLevel() === true)
+        {
+            return View('compo.create');
+        } else {
+            return View('compo.new-acound');
+        }
     }
 
     public function store()
@@ -91,6 +91,24 @@ class ComposController extends Controller
             abort_if($compo->owner_id !== auth()->id(), 403);
         }
         // $this->authorize('update', $compo);
+    }
+
+    public function own(){
+        $compo = Competition::where([
+            ['id', '=', auth()->id()],
+        ])->get();
+        return View('compo.compo', compact('compo'));
+    }
+
+    private function ChekMakeComopLevel(){
+        $user = Results::where([
+            ['user_id', '=', auth()->id()],
+        ])->get('id')->pluck('admin')->toArray();{}
+            if (count($user) > 3 ) {
+                return true;
+            } else {
+                return false;
+            }
     }
 }
 

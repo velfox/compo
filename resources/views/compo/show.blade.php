@@ -16,8 +16,9 @@
     <div class="mt-4 container">
         <div class="jumbotron">
             <h1 class="display-4">{{ $compo->name }} <span class="badge badge-secondary">{{$compo->date }}</span> </h1>
-            <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
             <p> hosted by {{ $compo->owner->name }} </p>
+            <p class="lead">Hier kan jij je inschijfen voor de compo en de resultaten bekijken. </p>
+
             <hr class="my-4">
             <div class="row">
                 <div class="col-sm">
@@ -54,22 +55,7 @@
                         </div>
                     </div>
                     <div class="col-sm">
-                            <div class="card" style="width: 18rem;">
-                                    <div class="card-body">
-                                        <h5 class="card-title">hoi</h5>
-                                        @php $deelnemers = count($compo->summoner); @endphp
-                                        <p class="card-text">Aantal deelnemers <span class="badge badge-light">{{ $deelnemers }}</span> </p>
-                                        <hr class="my-4">
-                                        <div class="row">
-                                            <div class="col-sm">
-                                                <p>max: <span class="badge badge-light">{{ $compo->maxplayers }}</span></p>
-                                            </div>
-                                            <div class="col-sm">
-                                                <p>min: <span class="badge badge-light">{{ $compo->minplayers }}</span></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+        
                     </div>
                     <div class="col-sm">
                     </div>

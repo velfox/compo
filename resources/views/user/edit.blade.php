@@ -41,7 +41,7 @@
                     <form action="/user/{{$user->id}}" method="post">
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}
-                        <button type="submit" class="btn btn-danger">verweider mijn acount</button>
+                        <button type="submit" class="btn btn-danger">verwijder acount</button>
                     </form>
                 </div>
             </div>
