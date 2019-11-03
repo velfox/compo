@@ -36,4 +36,20 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function results(){
+        return $this->hasMany(Results::class);
+    }
+
+    public function summoner(){
+        return $this->hasMany(summoner::class);
+    }
+
+    public function compo(){
+        return $this->hasMany(Competition::class);
+    }
+
+    public function owns($compo){
+       return abort_if($compo->owner_id !== auth()->id(), 403);
+    }
 }

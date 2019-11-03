@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Competition;
+use App\Mail\CompoCreated;
 use Hamcrest\Core\CombinableMatcher;
 use Illuminate\Http\Request;
 use App\summoner;
+use App\User;
 
 class ComposController extends Controller
 {
@@ -17,6 +19,13 @@ class ComposController extends Controller
     public function index()
     {
         $compo = Competition::all();
+        return View('compo.compo', compact('compo'));
+    }
+
+    public function own(){
+        $compo = Competition::where([
+            ['id', '=', auth()->id()],
+        ])->get();
         return View('compo.compo', compact('compo'));
     }
 
@@ -36,9 +45,12 @@ class ComposController extends Controller
              'date' => ['required','date',"after_or_equal:$today"]
             ]);
 
-        $validated['owner_id'] = auth()->id();
+            $validated['owner_id'] = auth()->id();
 
-        Competition::create($validated);
+            $compo = Competition::create($validated);
+
+
+
         return redirect('/compo');
 
 
@@ -51,21 +63,36 @@ class ComposController extends Controller
 
     public function edit(Competition $compo)
     {
-        $this->authorize('vieuw', $compo);
+        $this->ChekAuthorizeUser($compo);
         return view('compo.edit', compact('compo'));
     }
 
     public function update(Competition $compo)
     {
-        $this->authorize('update', $compo);
+        $this->ChekAuthorizeUser($compo);
         $compo->update(request(['name','maxplayers','minplayers','date',]));
         return redirect('/compo');
     }
 
     public function destroy(Competition $compo)
     {
-        $this->authorize('update', $compo);
+        $this->ChekAuthorizeUser($compo);
         $compo->delete();
         return redirect('/compo');
     }
+
+    private function ChekAuthorizeUser($compo){
+        $user = User::where([
+            ['id', '=', auth()->id()],
+        ])->get('admin')->pluck('admin')->toArray();
+
+        if ($user[0] == 1) {
+        } else {
+            abort_if($compo->owner_id !== auth()->id(), 403);
+        }
+        // $this->authorize('update', $compo);
+    }
 }
+
+
+

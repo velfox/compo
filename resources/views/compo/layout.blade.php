@@ -5,8 +5,8 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </head>
 <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -23,10 +23,12 @@
                     <li class="nav-item">
                       <a class="nav-link" href="/compo/create">add compo</a>
                     </li>
-
+                    @php $admin = 'admin' @endphp
+                    @can('compo', $admin)
                     <li class="nav-item">
-                      <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Adminpannel</a>
+                      <a class="nav-link" href="/admin" tabindex="-1" aria-disabled="true">Adminpannel</a>
                     </li>
+                    @endcan
                   </ul>
                   <ul class="navbar-nav ml-auto">
                   <li class="nav-item dropdown">
@@ -34,8 +36,7 @@
                             {{ Auth::user()->name }}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                          <a class="dropdown-item" href="#">instellingen</a>
-                          <a class="dropdown-item" href="#">mijn compos</a>
+                          <a class="dropdown-item" href="/user/{{ Auth::user()->id }}/edit">instellingen</a>
                           <div class="dropdown-divider"></div>
                           <a class="dropdown-item" href="{{ route('logout') }}"
                           onclick="event.preventDefault();
@@ -48,8 +49,9 @@
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
-                  <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="zoeken naar compo" aria-label="Search">
+                  <form action="/search" method="POST" class="form-inline my-2 my-lg-0">
+                    {{ csrf_field() }}
+                    <input name="search" class="form-control mr-sm-2" type="search" placeholder="zoeken naar compo" aria-label="Search">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">zoek</button>
                   </form>
                 </div>

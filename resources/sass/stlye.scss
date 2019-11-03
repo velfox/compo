@@ -6,5 +6,10 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
-// layout
+
 @import 'style';
+
+
+body{
+    background-color: orange!important;
+}

@@ -1,11 +1,10 @@
 <?php
-
 namespace App\Providers;
 
+use App\Competition;
+use App\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
-
-
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -16,7 +15,6 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         'App\Competition' => 'App\Policies\CompoPolicy',
     ];
-
     /**
      * Register any authentication / authorization services.
      *
@@ -25,9 +23,14 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(Gate $gate)
     {
         $this->registerPolicies();
-
         Gate::before(function ($user){
-            return $user->id == 1;
+            $admin = User::where([['id', '=', auth()->id()]])->get('admin')->pluck('admin')->toArray();
+            if ($admin[0] == 1) {
+                return true;
+            } else {
+               return false;
+            }
         });
     }
+
 }

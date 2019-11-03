@@ -11,49 +11,20 @@
 |
 */
 
-Route::get('/', 'PagesController@home');
+Route::redirect('/', '/compo');
 
-Route::get('/about', 'PagesController@about');
-
-Route::get('/contact', 'PagesController@contact');
-
-Route::get('/json', 'PagesController@json');
-
-Route::get('/compo', 'PagesController@compo');
+// Route::get('/compo', 'PagesController@compo');
 
 Route::resource('compo', 'composController');
+Route::get('own/compo', 'ComposController@own');
 
 Route::resource('summoner', 'SommonersComposController');
 
-// Route::post('summoner/{id}', 'SommonersComposController@store');
-Route::post('summoner/{id}', 'SommonersComposController@destroy');
 
+Route::post('search', ['search' => 'search', 'uses' => 'SearchController@index']);
 
-// Route::post('/compo', 'composController@store');
-// Route::get('/compo/create', 'PagesController@create');
-
-// Route::get('/', function () {
-//     $tasks = [
-//         'hoi',
-//         'dag',
-//         'doei'
-//     ];
-//     return view('welcome', [
-//         'tasks' => $tasks,
-//         'title' => request('title')
-
-//         ]);
-// });
-
-
-// Route::get('/contact', function () {
-//     return view('contact');
-// });
-
-// Route::get('/about', function () {
-//     return view('about');
-// });
-
+Route::resource('user', 'UserController');
+Route::get('/admin', 'UserController@admin');
 
 Auth::routes();
 

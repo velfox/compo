@@ -1,7 +1,7 @@
 @extends('compo.layout')
 
 @section('content')
-    <h1> create a new compo </h1>
+    <h1> Maak een nieuwe compo </h1>
 
     @if ($errors->any())
         <div class="alert alert-warning" role="alert">
