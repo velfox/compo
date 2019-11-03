@@ -21,7 +21,8 @@ class Competitions extends Migration
         $table->integer('maxplayers');
         $table->integer('minplayers');
         $table->date('date');
-        $table->boolean('team')->default(false);
+        $table->boolean('show')->default(true);
+        $table->boolean('admin')->default(false);
         $table->timestamp('created_at')->nullable();
         $table->timestamp('updated_at')->nullable();
         });

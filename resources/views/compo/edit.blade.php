@@ -2,7 +2,13 @@
 
 @section('content')
     <h1> <span class="badge badge-info"> Edit compo <span class="badge badge-primary">{{ $compo->name }} </span> <span class="badge badge-secondary">{{$compo->date }}</span> </span>   </h1>
-
+    @if ($errors->any())
+    <div class="alert alert-warning" role="alert">
+        @foreach ($errors->all() as $error)
+            <li> {{ $error }} </li>
+        @endforeach
+    </div>
+@endif
 <form action="/compo/{{$compo->id}}" method="post">
         {{ csrf_field() }}
         {{ method_field('PATCH') }}
@@ -27,6 +33,13 @@
             <input type="number" name="minplayers"  class="form-control" value="{{$compo->minplayers }}" placeholder="Min Players">
             <small class="form-text text-muted">Hoeveel spelers mogen er minimaal meedoen.</small>
         </div>
+        <div class="form-group">
+                <label for="">Tonen </label>
+                <input name="show" type="checkbox" checked data-toggle="toggle">
+                <small class="form-text text-muted">Bepaal hier of de compo te zien is op de homepage</small>
+            </div>
+
+
         <button type="submit" class="btn btn-primary">Bijwerken</button>
     </form>
 

@@ -15,6 +15,7 @@
                   </div>
             <div class="row">
                 @foreach ($compo as $compo)
+                    @if ($compo->show == 1)
                     <div class="col-sm d-flex justify-content-center">
                         <a href="/compo/{{ $compo->id }}" class="card mt-4 text-center" style="width: 18rem;">
                             <div  class="card-body" >
@@ -32,6 +33,7 @@
                             </div>
                         </a>
                     </div>
+                    @endif
                 @endforeach
             </div>
         </div>
